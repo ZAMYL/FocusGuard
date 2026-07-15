@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">专注卫士</string>
+    <string name="accessibility_service_description">专注卫士需要无障碍权限来监控应用使用情况，在番茄钟运行期间拦截抖音和微信中的分散注意力功能。我们不会收集或上传您的任何个人数据。</string>
+    <string name="tomato_timer_start">开始专注</string>
+    <string name="tomato_timer_stop">停止专注</string>
+    <string name="tomato_timer_pause">暂停</string>
+    <string name="tomato_timer_resume">继续</string>
+    <string name="lock_title">⚠️ 专注时间</string>
+    <string name="lock_fallback_text">别看了，赶紧回去干活！</string>
+    <string name="lock_remaining">剩余时间</string>
+    <string name="service_not_ready">请先在系统设置中开启「专注卫士」无障碍服务</string>
+</resources>

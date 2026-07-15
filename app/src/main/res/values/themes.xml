@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主界面主题 -->
+    <style name="Theme.FocusGuard" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- 锁机界面主题 —— 全屏无系统 UI -->
+    <style name="Theme.FocusGuard.LockScreen" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>
