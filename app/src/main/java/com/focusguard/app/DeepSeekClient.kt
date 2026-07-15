@@ -31,8 +31,8 @@ object DeepSeekClient {
     /** JSON MIME 类型 */
     private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
 
-    /** 硬编码兜底字符串 —— 网络超时或失败时返回 */
-    private const val FALLBACK_MESSAGE = "别看了，赶紧回去干活！"
+    /** 兜底字符串 —— 从本地语录库随机选取（网络失败时使用） */
+    private fun fallbackMessage(): String = LocalQuotes.randomBlockQuote()
 
     /** Gson 解析实例 */
     private val gson = Gson()
@@ -72,13 +72,13 @@ object DeepSeekClient {
 
             if (!response.isSuccessful) {
                 Log.e(TAG, "API 返回非成功状态码: ${response.code}")
-                return@withContext FALLBACK_MESSAGE
+                return@withContext fallbackMessage()
             }
 
             val bodyString = response.body?.string()
             if (bodyString.isNullOrBlank()) {
                 Log.e(TAG, "API 返回空响应体")
-                return@withContext FALLBACK_MESSAGE
+                return@withContext fallbackMessage()
             }
 
             val parsed = gson.fromJson(bodyString, DeepSeekResponse::class.java)
@@ -86,14 +86,14 @@ object DeepSeekClient {
 
             if (content.isNullOrBlank()) {
                 Log.e(TAG, "解析后内容为空")
-                FALLBACK_MESSAGE
+                fallbackMessage()
             } else {
                 Log.d(TAG, "成功获取警醒语: $content")
                 content.trim()
             }
         } catch (e: Exception) {
             Log.e(TAG, "请求 DeepSeek 失败: ${e.message}", e)
-            FALLBACK_MESSAGE
+            fallbackMessage()
         }
     }
 
@@ -105,7 +105,10 @@ object DeepSeekClient {
      * 构造中文 Prompt
      */
     private fun buildPrompt(reason: String): String {
-        return "用户在专注时间试图刷${reason}，请写一句20字以内的狠辣毒舌警醒话，逼他回去工作。"
+        return "你是一个说话一针见血、幽默且极度犀利的毒舌自律教练。" +
+            "当前用户在番茄钟专注期间试图刷${reason}，" +
+            "请针对这个行为写一句20字以内的中文'毒舌警醒话'，逼他立刻放下手机回去干活。" +
+            "要痛，但好笑，具有警示作用。"
     }
 
     /**
